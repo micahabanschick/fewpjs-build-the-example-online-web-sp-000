@@ -3,7 +3,33 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+const articleHearts = document.getElementsByClassName('like');
 
+const glyphStates = {
+  EMPTY_HEART: FULL_HEART,
+  FULL_HEART: EMPTY_HEART
+};
+
+const colorStates = {
+  'red' : '',
+  '': 'red'
+};
+
+function likeCallback(e) {
+  let heart = e.target;
+
+  mimicServerCall('bogusUrl')
+    .then(message => {
+      heart.innerText = glyphStates[heart.innerText];
+      heart.style.color = colorStates[heart.style.color];
+    }).catch(error => {
+      document.getElementById('modal').className = '';
+    })
+}
+
+for (let glyph of articleHearts) {
+  glyph.addEventListener('click', likeCallback);
+}
 
 
 
